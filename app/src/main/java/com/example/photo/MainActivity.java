@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.photo.activity.AlbumView;
 import com.example.photo.model.Album;
 import com.example.photo.model.Photo;
 
