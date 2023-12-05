@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Photos</string>
+
+    <string-array name="tag_category_array">
+        <item>Person</item>
+        <item>Location</item>s
+    </string-array>
+</resources>
