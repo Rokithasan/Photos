@@ -4,12 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-package com.AJ_David.photos;
-
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -17,6 +13,13 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+
+import com.example.photo.MainActivity;
+import com.example.photo.R;
+import com.example.photo.adapter.ImageAdapter;
+import com.example.photo.model.Album;
+import com.example.photo.model.Photo;
+import com.example.photo.model.Tag;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -58,13 +61,13 @@ public class AlbumView extends AppCompatActivity {
 
         gridView = findViewById(R.id.GridView);
         add = (Button) findViewById(R.id.add);
-        if (HomeScreen.albumName.equals("SearchRes")){
+        if (MainActivity.albumName.equals("SearchRes")){
             add.setVisibility(View.INVISIBLE);
         }
         copy = findViewById(R.id.Copy);
         copy.setVisibility(View.INVISIBLE);
         paste = (Button) findViewById(R.id.paste);
-        paste.setVisibility(HomeScreen.isCopy ? View.VISIBLE : View.INVISIBLE);
+        paste.setVisibility(MainActivity.isCopy ? View.VISIBLE : View.INVISIBLE);
         display = (Button) findViewById(R.id.display);
         display.setVisibility(View.INVISIBLE);
         delete = (Button) findViewById(R.id.delete);
@@ -115,7 +118,7 @@ public class AlbumView extends AppCompatActivity {
         paste.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view){
-                imgAdapter.add(HomeScreen.copy);
+                imgAdapter.add(MainActivity.copy);
                 gridView.setAdapter(imgAdapter);
                 write();
             }
@@ -133,9 +136,9 @@ public class AlbumView extends AppCompatActivity {
         copy.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeScreen.isCopy = true;
+                MainActivity.isCopy = true;
                 paste.setVisibility(View.VISIBLE);
-                HomeScreen.copy = imgAdapter.uris.get(index);
+                MainActivity.copy = imgAdapter.uris.get(index);
             }
         });
 
@@ -143,9 +146,9 @@ public class AlbumView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                HomeScreen.isCopy = true;
+                MainActivity.isCopy = true;
                 paste.setVisibility(View.VISIBLE);
-                HomeScreen.copy = imgAdapter.uris.get(index);
+                MainActivity.copy = imgAdapter.uris.get(index);
                 imgAdapter.remove(index);
                 gridView.setAdapter(imgAdapter);
                 write();
@@ -191,7 +194,7 @@ public class AlbumView extends AppCompatActivity {
         String[] strings = {};
         imgAdapter.clear();
         try {
-            FileInputStream fileInputStream = openFileInput(HomeScreen.albumName + ".list");
+            FileInputStream fileInputStream = openFileInput(MainActivity.albumName + ".list");
 
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -227,7 +230,7 @@ public class AlbumView extends AppCompatActivity {
             ArrayList<Photo> uris = imgAdapter.getPhotos();
 
             String str = "";
-            FileOutputStream fileOutputStream = openFileOutput(HomeScreen.albumName+".list", MODE_PRIVATE);
+            FileOutputStream fileOutputStream = openFileOutput(MainActivity.albumName+".list", MODE_PRIVATE);
             for (Photo u : uris) {
                 ArrayList<Tag> tags = new ArrayList<>();
                 for (int i = 0; i < u.tags.size(); i++){

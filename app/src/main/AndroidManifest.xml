@@ -12,6 +12,21 @@
         android:theme="@style/Theme.Photo"
         tools:targetApi="31">
         <activity
+            android:name=".NewTag"
+            android:exported="false" />
+        <activity
+            android:name=".SlideShowView"
+            android:exported="false" />
+        <activity
+            android:name=".Search"
+            android:exported="false" />
+        <activity
+            android:name=".NewAlbum"
+            android:exported="false" />
+        <activity
+            android:name=".EditAlbum"
+            android:exported="false" />
+        <activity
             android:name=".AlbumView"
             android:exported="false" />
         <activity
