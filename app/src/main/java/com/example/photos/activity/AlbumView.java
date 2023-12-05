@@ -48,6 +48,28 @@ public class AlbumView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
 
+        // Set up the back button
+        ImageView backButton = findViewById(R.id.backImageViewId);
+        TextView backButtonText = findViewById(R.id.backTextViewId);
+        backButton.setOnClickListener(view -> onBackPressed());
+        backButtonText.setOnClickListener(view -> onBackPressed());
+        Intent intent = getIntent();
+        if (intent != null) {
+            selectedAlbum = (Album) intent.getSerializableExtra("album");
+            // Check if selectedAlbum is not null and has photos
+            if (selectedAlbum != null && selectedAlbum.getPhotos() != null && !selectedAlbum.getPhotos().isEmpty()) {
+                List<Photo> albumPhotos = selectedAlbum.getPhotos();
+                // Pass both the context, album, and photos to the PhotoAdapter
+                PhotoAdapter photoAdapter = new PhotoAdapter(this, albumPhotos, selectedAlbum);
+                // Set up the RecyclerView and PhotoAdapter
+                RecyclerView photoRecyclerView = findViewById(R.id.photoRecyclerView);
+                photoRecyclerView.setAdapter(photoAdapter);
+
+                // Use a LinearLayoutManager or a GridLayoutManager with the desired number of columns
+                photoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            }
+        }
+/*
         // Initialize the adapter with an empty list initially
         photoAdapter = new PhotoAdapter(this, new ArrayList<>(), selectedAlbum);
         // Set up the back button
@@ -101,8 +123,6 @@ public class AlbumView extends AppCompatActivity {
             // Restore the selected album from the instance state if available
             if (savedInstanceState != null) {
                 selectedAlbum = (Album) savedInstanceState.getSerializable("selectedAlbum");
-                // Update the RecyclerView to reflect the current album data
-                updateRecyclerView();
             }
     }
 
@@ -130,9 +150,6 @@ public class AlbumView extends AppCompatActivity {
                     // Update selectedAlbum to reflect the changes
                     selectedAlbum = findAlbumByName(selectedAlbum.getName());
                     setResult(RESULT_OK);
-
-                    // Update the RecyclerView
-                    updateRecyclerView();
                 } else {
                     // Handle the case when creating a Photo object fails
                     Toast.makeText(this, "Error: Unable to create a Photo object", Toast.LENGTH_SHORT).show();
@@ -166,13 +183,7 @@ public class AlbumView extends AppCompatActivity {
     }
 
     // This method ensures that the RecyclerView is updated with the current album data
-    private void updateRecyclerView() {
-        if (selectedAlbum != null && selectedAlbum.getPhotos() != null && !selectedAlbum.getPhotos().isEmpty()) {
-            List<Photo> albumPhotos = selectedAlbum.getPhotos();
-            photoAdapter.setPhotoList(albumPhotos);
-            photoAdapter.notifyDataSetChanged();
-        }
-    }
+
 
 
     // Method to add photos to the selected album
@@ -188,6 +199,8 @@ public class AlbumView extends AppCompatActivity {
             return selectedAlbum.getPhotos();
         }
         return Collections.emptyList(); // Return an empty list if no album is selected
+
+ */
     }
 
 }

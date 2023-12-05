@@ -71,29 +71,20 @@ public class MainActivity extends AppCompatActivity {
 
             builder.setPositiveButton("OK", (dialog, which) -> {
                 String albumName = input.getText().toString().trim();
-                allPhotos =PhotoDatabase.getAllPhotos();
 
                 if (!albumName.isEmpty()) {
                     // Create a new album with the entered name and an empty list of photos
                     Album newAlbum = new Album(albumName, new ArrayList<>());
-                    // Use the PhotoDatabase to get photos specifically for the new album
-                    List<Photo> albumPhotos = PhotoDatabase.getPhotosForAlbum(newAlbum);
-
-                    // Add a default photo from the allPhotos list to the new album
+                    // Use another dialog or method to let the user select photos from the database
+                    // For simplicity, let's assume the user selects the first two photos
+                    List<Photo> allPhotos = PhotoDatabase.getAllPhotos();
                     if (!allPhotos.isEmpty()) {
-                        Photo defaultPhoto = allPhotos.get(0);
-                        newAlbum.addPhoto(defaultPhoto);
-                        Log.d("PhotoAddition", "Default photo added to the album: " + defaultPhoto);
-                    } else {
-                        Log.e("PhotoAddition", "Error: allPhotos list is empty");
+                        newAlbum.getPhotos().add(allPhotos.get(0));
                     }
-
-                    newAlbum.setPhotos(albumPhotos);
-                    PhotoDatabase.addAlbum(newAlbum);
+                    // Add the new album to the list and notify the adapter
+                    demoAlbum.add(newAlbum);
                     adapter.notifyDataSetChanged();
                 }
-
-
             });
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
             builder.show();

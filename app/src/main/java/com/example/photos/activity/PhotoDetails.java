@@ -112,7 +112,7 @@ public class PhotoDetails extends AppCompatActivity {
                 android.R.layout.simple_spinner_item
         );
         // Tag Section
-         selectedAlbum = findAlbumByName(selectedAlbumName);
+        selectedAlbum = findAlbumByName(selectedAlbumName);
         if (selectedAlbum != null && selectedPhotoIndex != -1) {
             // Get the selected photo
             List<Photo> albumPhotos = selectedAlbum.getPhotos();
@@ -123,7 +123,7 @@ public class PhotoDetails extends AppCompatActivity {
             }
         }
 
-       // Specify the layout to use when the list of choices appears.
+        // Specify the layout to use when the list of choices appears.
         adapterTag.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
         tagSpinner.setAdapter(adapterTag);
@@ -173,7 +173,7 @@ public class PhotoDetails extends AppCompatActivity {
         });
     }
     private String formatTags(List<String> tags) {
-        if (tags == null || tags.isEmpty()) {
+        if (tags.isEmpty()) {
             return "No tags";
         }
         StringBuilder formattedTags = new StringBuilder();
@@ -182,7 +182,6 @@ public class PhotoDetails extends AppCompatActivity {
         }
         return formattedTags.toString().trim();
     }
-
     private void onAddButtonClicked() {
         // Get the selected album
         Album selectedAlbum = findAlbumByName(selectedAlbumName);
@@ -330,18 +329,11 @@ public class PhotoDetails extends AppCompatActivity {
             List<Photo> albumPhotos = selectedAlbum.getPhotos();
             if (selectedPhotoIndex >= 0 && selectedPhotoIndex < albumPhotos.size()) {
                 Photo selectedPhoto = albumPhotos.get(selectedPhotoIndex);
-                List<String> tags = selectedPhoto != null ? selectedPhoto.getTags() : null;
-                if (tags != null) {
-                    displayTagValue.setText(formatTags(tags));
-                    showToast("Tags updated successfully");
-                } else {
-                    displayTagValue.setText("No tags");
-                    showToast("Tags are null");
-                }
+                displayTagValue.setText(formatTags(selectedPhoto.getTags()));
+                showToast("Tags updated successfully");
             }
         }
     }
-
 
     private void removeTagFromPhoto(Photo selectedPhoto, String tagValueToRemove) {
         List<String> photoTags = selectedPhoto.getTags();
